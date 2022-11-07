@@ -4,7 +4,6 @@ const Product = require("../models/Product");
 exports.getAllProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
-      console.log(products);
       const mappedProducts = products.map((product) => {
         product.imageUrl =
           req.protocol +
