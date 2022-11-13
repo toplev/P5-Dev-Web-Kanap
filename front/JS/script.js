@@ -24,31 +24,17 @@ fetch("http://localhost:3000/api/products")
 
 for (i = 0; i < items.length; i++) {
   console.log(typeof item[i]);
-}*/
+}
 
-const items = document.getElementById("items");
+const items = document.getElementById("tems");
 
 fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => {
     console.log(data);
-    document.getElementById("items").innerHTML =
+    document.getElementById("tems").innerHTML =
       data[0].name + " " + data[0].description;
   });
-
-const passengers = [
-  fetch("http://localhost:3000/api/products")
-  .then((res) => res.json())
-  .then((data) => {
-    console.log(data)};,
-  "Sarah Kate'",
-  "Audrey Simon",
-  "Tao Perkington",
-];
-
-for (let i in passengers) {
-  console.log("Embarquement du passager " + passengers[i]);
-}
 
 /* const items = () => {
   fetch("http://localhost:3000/api/products")
@@ -101,4 +87,51 @@ const ite = [
 
 for (i = 0; i < items.length; i++) {
   console.log(typeof items[i]);
-}*/
+}
+
+const items = document.getElementById("test");
+
+fetch("http://localhost:3000/api/products")
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+    document.getElementById("test").innerHTML =
+      data[0].name + " " + data[0].description;
+  });*/
+
+const test = document.querySelector("test");
+
+fetch("http://localhost:3000/api/products")
+  .then(function (res) {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then(function (data) {
+    console.log(data);
+    data.forEach((element) => {
+      const myImg = document.createElement("img");
+      console.log(element.imageUrl);
+      myImg.src = element.imageUrl;
+      test.appendChild(myImg);
+    });
+    //document.getElementById("test").innerHTML = data[0].name;
+  })
+  .catch(function (err) {
+    // Une erreur est survenue
+  });
+
+/*let btnText = document.querySelector("#btnText");
+let btnHtml = document.querySelector("#btnHtml");
+let content = document.querySelector(".content");*/
+
+/*let myString =
+  '<p>dssd</p><img src="http://localhost:3000/images/kanap01.jpeg"/>';*/
+
+/*btnText.addEventListener("click", () => {
+  content.innerText = myString;
+});
+
+btnHtml.addEventListener("click", () => {
+  content.innerHTML = myString;
+});*/
