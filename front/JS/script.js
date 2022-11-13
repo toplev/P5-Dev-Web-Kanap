@@ -32,8 +32,23 @@ fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => {
     console.log(data);
-    document.getElementById("items").innerHTML = data[0].name;
+    document.getElementById("items").innerHTML =
+      data[0].name + " " + data[0].description;
   });
+
+const passengers = [
+  fetch("http://localhost:3000/api/products")
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data)};,
+  "Sarah Kate'",
+  "Audrey Simon",
+  "Tao Perkington",
+];
+
+for (let i in passengers) {
+  console.log("Embarquement du passager " + passengers[i]);
+}
 
 /* const items = () => {
   fetch("http://localhost:3000/api/products")
