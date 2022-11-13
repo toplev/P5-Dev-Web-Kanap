@@ -99,22 +99,21 @@ fetch("http://localhost:3000/api/products")
       data[0].name + " " + data[0].description;
   });*/
 
-const test = document.querySelector("test");
+const items = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")
-  .then(function (res) {
+  .then((res) => {
     if (res.ok) {
       return res.json();
     }
   })
-  .then(function (data) {
-    console.log(data);
-    data.forEach((element) => {
+  .then((data) => {
+    for (let i = 0; i <= data.length; i++) {
       const myImg = document.createElement("img");
-      console.log(element.imageUrl);
-      myImg.src = element.imageUrl;
-      test.appendChild(myImg);
-    });
+      console.log(data[i].imageUrl);
+      myImg.src = data[i].imageUrl;
+      items.appendChild(myImg);
+    }
     //document.getElementById("test").innerHTML = data[0].name;
   })
   .catch(function (err) {
