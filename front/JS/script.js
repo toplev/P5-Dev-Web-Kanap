@@ -113,6 +113,8 @@ fetch("http://localhost:3000/api/products")
       console.log(data[i].imageUrl);
       myImg.src = data[i].imageUrl;
       items.appendChild(myImg);
+      myImg.height = 150;
+      myImg.width = 150;
     }
     //document.getElementById("test").innerHTML = data[0].name;
   })
