@@ -1,3 +1,52 @@
+const items = document.getElementById("price");
+
+fetch("http://localhost:3000/api/products")
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then((data) => {
+    for (let i = 0; i <= data.length; i++);
+    {
+      const myImg = document.createElement("img");
+      console.log(data[i].imageUrl);
+      myImg.src = data[i].imageUrl;
+      price.appendChild(myImg);
+      myImg.height = 150;
+      myImg.width = 150;
+    }
+    const nomElement = document.createElement("p");
+    nomElement.innerText = data[0].name;
+    items.appendChild(nomElement);
+
+    const prixElement = document.createElement("p");
+    prixElement.innerText = data[0].price;
+    items.appendChild(prixElement);
+
+    const descriptionElement = document.createElement("p");
+    descriptionElement.innerText = data[0].description;
+    items.appendChild(descriptionElement);
+  })
+  .catch(function (err) {});
+
+/*fetch("http://localhost:3000/api/products").then((res) => {
+  if (res.ok) {
+    return res.json();
+  }
+});
+const ampoule = pieces[0];
+const nomElement = document.createElement("h2");
+nomElement.innerText = ampoule.nom;
+const prixElement = document.createElement("p");
+prixElement.innerText = ampoule.prix;
+const categorieElement = document.createElement("p");
+categorieElement.innerText = ampoule.categorie;
+
+const sectionfiches = document.querySelector(".fiches");
+
+sectionfiches.appendChild(nomElement);
+
 /*const items = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")
@@ -196,7 +245,7 @@ let content = document.querySelector(".content");*/
 
 btnHtml.addEventListener("click", () => {
   content.innerHTML = myString;
-});*/
+});
 
 const items = document.getElementById("myDIV");
 
@@ -229,3 +278,5 @@ fetch("http://localhost:3000/api/products")
   .catch(function (err) {
     // Une erreur est survenue
   });
+
+  */
