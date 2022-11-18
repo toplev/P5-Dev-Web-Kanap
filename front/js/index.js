@@ -1,4 +1,4 @@
-const items = document.getElementById("items");
+const produits = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")
   .then((res) => {
@@ -8,26 +8,33 @@ fetch("http://localhost:3000/api/products")
   })
   .then((data) => {
     for (let i = 0; i <= data.length; i++) {
-      const myImg = document.createElement("img");
+      const element_a = document.createElement("a");
+      produits.appendChild(element_a);
+      const element_article = document.createElement("article");
+      produits.appendChild(element_article);
+      const element_h3 = document.createElement("h3");
+      element_article.appendChild(element_h3);
+      element_h3.innerText = data[i].description;
+
+      /* const myImg = document.createElement("img");
       console.log(data[i]);
       myImg.src = data[i].imageUrl;
-      items.appendChild(myImg);
+      produits.appendChild(myImg);
       myImg.height = 150;
       myImg.width = 150;
 
       const nomElement = document.createElement("p");
       nomElement.innerText = data[i].name;
-      items.appendChild(nomElement);
+      produits.appendChild(nomElement);
 
       const prixElement = document.createElement("p");
       prixElement.innerText = data[i].price;
-      items.appendChild(prixElement);
+      produits.appendChild(prixElement);
 
       const descriptionElement = document.createElement("p");
       descriptionElement.innerText = data[i].description;
-      items.appendChild(descriptionElement);
+      produits.appendChild(descriptionElement);*/
     }
-    //document.getElementById("test").innerHTML = data[0].name;
   })
   .catch(function (err) {
     // Une erreur est survenue
