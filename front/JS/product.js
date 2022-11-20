@@ -14,6 +14,9 @@ fetch("http://localhost:3000/api/products")
       price.appendChild(myImg);
       myImg.height = 150;
       myImg.width = 150;
+      const prixElement = document.createElement("p");
+      prixElement.innerText = data[i].price;
+      produits.appendChild(prixElement);
     }
     //document.getElementById("test").innerHTML = data[0].name;
   })

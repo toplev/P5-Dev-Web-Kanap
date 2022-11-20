@@ -7,33 +7,25 @@ fetch("http://localhost:3000/api/products")
     }
   })
   .then((data) => {
-    for (let i = 0; i <= data.length; i++) {
+    for (let i = 0; i <= 7; i++) {
+      console.log(data[i]);
       const element_a = document.createElement("a");
       produits.appendChild(element_a);
+
       const element_article = document.createElement("article");
-      produits.appendChild(element_article);
+      element_a.appendChild(element_article);
+
+      const element_img = document.createElement("img");
+      element_article.appendChild(element_img);
+      element_img.src = data[i].imageUrl;
+
       const element_h3 = document.createElement("h3");
       element_article.appendChild(element_h3);
-      element_h3.innerText = data[i].description;
+      element_h3.innerText = data[i].name;
 
-      /* const myImg = document.createElement("img");
-      console.log(data[i]);
-      myImg.src = data[i].imageUrl;
-      produits.appendChild(myImg);
-      myImg.height = 150;
-      myImg.width = 150;
-
-      const nomElement = document.createElement("p");
-      nomElement.innerText = data[i].name;
-      produits.appendChild(nomElement);
-
-      const prixElement = document.createElement("p");
-      prixElement.innerText = data[i].price;
-      produits.appendChild(prixElement);
-
-      const descriptionElement = document.createElement("p");
-      descriptionElement.innerText = data[i].description;
-      produits.appendChild(descriptionElement);*/
+      const element_p = document.createElement("p");
+      element_article.appendChild(element_p);
+      element_p.innerText = data[i].description;
     }
   })
   .catch(function (err) {
