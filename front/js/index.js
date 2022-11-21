@@ -11,6 +11,7 @@ fetch("http://localhost:3000/api/products")
       console.log(data[i]);
       const element_a = document.createElement("a");
       produits.appendChild(element_a);
+      element_a.href += "product.html?id=" + data[i]._id;
 
       const element_article = document.createElement("article");
       element_a.appendChild(element_article);
