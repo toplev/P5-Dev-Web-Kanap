@@ -309,3 +309,14 @@ fetch("http://localhost:3000/api/products")
   let params = new URLSearchParams(window.location.search);
 
   */
+
+const element_img = document.createElement("img");
+element_article.appendChild(element_img);
+element_img.src = data[i].imageUrl;
+
+const el = document.createElement("div");
+el.classList.add("item__img");
+el.innerText = data.name;
+console.log(data.imageUrl);
+const box = document.getElementById("box");
+box.appendChild(el);
