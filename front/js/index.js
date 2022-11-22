@@ -1,3 +1,6 @@
+let urlData = new URL("http://127.0.0.1:5500/front/html/index.html?ok=23");
+let params = new URLSearchParams(window.location.search);
+
 const produits = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")

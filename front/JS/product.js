@@ -1,4 +1,13 @@
-fetch("http://localhost:3000/api/products")
+const apiID = window.location.search;
+console.log("keys & values:", apiID);
+
+const urlParams = new URLSearchParams(apiID);
+
+const param1 = urlParams.get("id");
+
+console.log(param1);
+
+fetch("http://localhost:3000/api/products/?id=" + param1)
   .then((res) => {
     if (res.ok) {
       return res.json();
@@ -9,7 +18,7 @@ fetch("http://localhost:3000/api/products")
       const produits = document.getElementById("title");
       const element_h1 = document.createElement("h1");
       produits.appendChild(element_h1);
-      element_h1.innerText = data[i].name;
+      element_h1.innerText = param1;
 
       const price = document.getElementById("price");
       const element_price = document.createElement("span");
