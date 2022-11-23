@@ -33,6 +33,11 @@ fetch("http://localhost:3000/api/products/" + id)
     const element_description = document.createElement("p");
     description.appendChild(element_description);
     element_description.innerText = data.description;
+
+    const color = document.getElementById("colors");
+    const element_color = document.createElement("option");
+    color.appendChild(element_color);
+    element_color.innerText = data.colors;
   })
   .catch(function (err) {
     // Une erreur est survenue
