@@ -7,7 +7,7 @@ fetch("http://localhost:3000/api/products")
     }
   })
   .then((data) => {
-    for (let i = 0; i <= 7; i++) {
+    for (let i = 0; i <= data.length; i++) {
       console.log(data[i]);
       const element_a = document.createElement("a");
       produits.appendChild(element_a);
