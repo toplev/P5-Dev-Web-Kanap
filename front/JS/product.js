@@ -36,9 +36,12 @@ fetch("http://localhost:3000/api/products/" + id)
 
     const color = document.getElementById("colors");
     const element_color = document.createElement("option");
+    element_color.setAttribute("class", "value");
     color.appendChild(element_color);
-    element_color.innerText = data.colors;
+    element_color.innerText = data.colors[i];
+    console.log(data.colors);
   })
+
   .catch(function (err) {
     // Une erreur est survenue
   });
