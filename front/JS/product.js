@@ -34,12 +34,14 @@ fetch("http://localhost:3000/api/products/" + id)
     description.appendChild(element_description);
     element_description.innerText = data.description;
 
-    const color = document.getElementById("colors");
-    const element_color = document.createElement("option");
-    element_color.setAttribute("class", "value");
-    color.appendChild(element_color);
-    element_color.innerText = data.colors[i];
-    console.log(data.colors);
+    let colors = data.colors;
+    for (let i = 0; i < colors.length; i++) {
+      const color = document.getElementById("colors");
+      const element_color = document.createElement("option");
+      element_color.setAttribute("class", "value");
+      color.appendChild(element_color);
+      element_color.innerText = colors[i];
+    }
   })
 
   .catch(function (err) {
