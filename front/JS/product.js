@@ -43,7 +43,30 @@ fetch("http://localhost:3000/api/products/" + id)
       element_color.innerText = colors[i];
     }
   })
-
   .catch(function (err) {
     // Une erreur est survenue
   });
+
+var itemQuantity = 1;
+var color = [colors];
+
+const buttonPanier = document.getElementById("addToCart");
+buttonPanier.addEventListener("click", function () {
+  let productInPanier = {
+    Id: id,
+    quantity: itemQuantity,
+    color: color,
+  };
+  console.log(productInPanier);
+});
+
+/*function panier() {
+  const btnAddCart = document.getElementById("addToCart");
+  btnAddCart.addEventListener("click", () => {
+    if (itemQuantity.value > 0 && itemQuantity.value < 1000) {
+      let productInPanier = {
+        name: (element_h1.innerText = data.name),
+      };
+    }
+  });
+}*/
