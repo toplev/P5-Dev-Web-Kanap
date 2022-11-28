@@ -38,7 +38,7 @@ fetch("http://localhost:3000/api/products/" + id)
     for (let i = 0; i < colors.length; i++) {
       const color = document.getElementById("colors");
       const element_color = document.createElement("option");
-      element_color.setAttribute("class", "value");
+      element_color.setAttribute("value", colors[i]);
       color.appendChild(element_color);
       element_color.innerText = colors[i];
     }
@@ -47,15 +47,22 @@ fetch("http://localhost:3000/api/products/" + id)
     // Une erreur est survenue
   });
 
-var itemQuantity = 1;
-var color = [colors];
+document.getElementById().value;
+console.log(colors);
+/*const newcolor = document.getElementById("colors");
+newcolor.addEventListener("click", function () {
+  console.log(newcolor);
+});
+
+let quantity = document.querySelector("quantity");
+console.log(quantity);*/
 
 const buttonPanier = document.getElementById("addToCart");
 buttonPanier.addEventListener("click", function () {
   let productInPanier = {
     Id: id,
-    quantity: itemQuantity,
-    color: color,
+    color: newcolor,
+    quantity: quantity,
   };
   console.log(productInPanier);
 });
