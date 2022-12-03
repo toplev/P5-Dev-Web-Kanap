@@ -47,33 +47,19 @@ fetch("http://localhost:3000/api/products/" + id)
     // Une erreur est survenue
   });
 
-document.getElementById().value;
-console.log(colors);
-/*const newcolor = document.getElementById("colors");
-newcolor.addEventListener("click", function () {
-  console.log(newcolor);
-});
-
-let quantity = document.querySelector("quantity");
-console.log(quantity);*/
-
 const buttonPanier = document.getElementById("addToCart");
 buttonPanier.addEventListener("click", function () {
+  let select = document.getElementById("colors").value;
+  let quantity = document.getElementById("quantity").value;
+
   let productInPanier = {
     Id: id,
-    color: newcolor,
+    color: select,
     quantity: quantity,
   };
   console.log(productInPanier);
+  let paniers = JSON.stringify(productInPanier);
+  localStorage.setItem("Panier", paniers);
+  localStorage.getItem(paniers);
+  console.log(paniers);
 });
-
-/*function panier() {
-  const btnAddCart = document.getElementById("addToCart");
-  btnAddCart.addEventListener("click", () => {
-    if (itemQuantity.value > 0 && itemQuantity.value < 1000) {
-      let productInPanier = {
-        name: (element_h1.innerText = data.name),
-      };
-    }
-  });
-}*/
