@@ -1,12 +1,3 @@
-fetch("http://localhost:3000/api/products/" + id).then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-});
-.then(data) => {
-  console.log(data);}
-
-
 fetch("http://localhost:3000/api/products/")
   .then((res) => {
     if (res.ok) {
@@ -22,6 +13,7 @@ fetch("http://localhost:3000/api/products/")
     cart__article.setAttribute("data-id", obj.Id);
     cart__article.setAttribute("data-color", obj.color);
     items.appendChild(cart__article);
+    console.log(ok);
 
     const itemimg = document.getElementsByClassName("cart__item")[0];
     const cart__item__img = document.createElement("div");
@@ -34,7 +26,7 @@ fetch("http://localhost:3000/api/products/")
       element_img.src = data[i].imageUrl;
       element_img.setAttribute("alt", "Photographie d'un canapé");
       image.appendChild(element_img);
-      console.log("http://localhost:3000/api/products/" + obj.Id);
+      console.log(data);
     }
   })
   .catch(function (err) {
