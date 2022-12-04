@@ -13,7 +13,6 @@ fetch("http://localhost:3000/api/products/")
     cart__article.setAttribute("data-id", obj.Id);
     cart__article.setAttribute("data-color", obj.color);
     items.appendChild(cart__article);
-    console.log(ok);
 
     const itemimg = document.getElementsByClassName("cart__item")[0];
     const cart__item__img = document.createElement("div");
@@ -26,8 +25,10 @@ fetch("http://localhost:3000/api/products/")
       element_img.src = data[i].imageUrl;
       element_img.setAttribute("alt", "Photographie d'un canapé");
       image.appendChild(element_img);
-      console.log(data);
     }
+
+    const itemcontent = document.getElementsByClassName("cart__item")[0];
+    const cart__content = document.createElement("article");
   })
   .catch(function (err) {
     // Une erreur est survenue
