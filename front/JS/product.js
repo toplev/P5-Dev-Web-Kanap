@@ -52,31 +52,22 @@ buttonPanier.addEventListener("click", function () {
   let select = document.getElementById("colors").value;
   let quantity = document.getElementById("quantity").value;
 
+  const localStorageContent = localStorage.getItem("Panier");
+
+  let paniers;
+  if (localStorageContent === null) {
+    paniers = [];
+  } else {
+    paniers = JSON.parse(localStorageContent);
+  }
+
   let productInPanier = {
     Id: id,
     color: select,
     quantity: quantity,
   };
-  console.log(productInPanier);
-  let paniers = JSON.stringify(productInPanier);
+  paniers.push(productInPanier);
+  paniers = JSON.stringify(paniers);
   localStorage.setItem("Panier", paniers);
   console.log(paniers);
 });
-
-/*localStorage.setItem("name", "juan");*/
-
-const localStorageContent = localStorage.getItem("names");
-console.log(localStorageContent);
-
-let names;
-if (localStorageContent === null) {
-  names = [];
-} else {
-  names = JSON.parse(localStorageContent);
-}
-
-names.push("Juan");
-names.push("Leo");
-localStorage.setItem("names", JSON.stringify(names));
-
-console.log(JSON.stringify(names));
