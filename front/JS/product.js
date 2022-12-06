@@ -51,9 +51,9 @@ const buttonPanier = document.getElementById("addToCart");
 buttonPanier.addEventListener("click", function () {
   let select = document.getElementById("colors").value;
   let quantity = document.getElementById("quantity").value;
+  quantity = parseInt(quantity);
 
   const localStorageContent = localStorage.getItem("Panier");
-
   let paniers;
   if (localStorageContent === null) {
     paniers = [];
@@ -61,13 +61,28 @@ buttonPanier.addEventListener("click", function () {
     paniers = JSON.parse(localStorageContent);
   }
 
-  let productInPanier = {
+  console.log(paniers);
+
+  let productToAdd = {
     Id: id,
     color: select,
     quantity: quantity,
   };
-  paniers.push(productInPanier);
-  paniers = JSON.stringify(paniers);
-  localStorage.setItem("Panier", paniers);
-  console.log(paniers);
+  let productalredy = false;
+
+  paniers.forEach((product) => {
+    if (
+      product.Id === productToAdd.Id &&
+      product.color === productToAdd.color
+    ) {
+      product.quantity += productToAdd.quantity;
+      productalredy = true;
+      return;
+    }
+  });
+
+  if (!productalredy) {
+    paniers.push(productToAdd);
+  }
+  localStorage.setItem("Panier", JSON.stringify(paniers));
 });
