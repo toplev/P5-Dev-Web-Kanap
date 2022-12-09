@@ -1,6 +1,7 @@
 let panier = localStorage.getItem("Panier");
 let obj = JSON.parse(panier);
 let articleindex = 0;
+let newprice = 0;
 if (obj === null) {
   console.log("Panier Vide");
 } else {
@@ -97,7 +98,6 @@ if (obj === null) {
         let numberofproducts = 0;
         paniers.forEach((product) => {
           numberofproducts += product.quantity;
-          console.log(numberofproducts);
         });
 
         const cart__contentdelete = document.createElement("div");
@@ -115,6 +115,10 @@ if (obj === null) {
 
         const totalQuantity = document.getElementById("totalQuantity");
         totalQuantity.innerText = numberofproducts;
+
+        newprice = newprice + data.price;
+        const totalPrice = document.getElementById("totalPrice");
+        totalPrice.innerText = newprice;
       })
       .catch(function (err) {
         // Une erreur est survenue
