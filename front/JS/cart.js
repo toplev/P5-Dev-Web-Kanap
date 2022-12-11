@@ -119,7 +119,16 @@ if (obj === null) {
         newprice = newprice + data.price;
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = newprice;
+
+        document
+          .getElementsByName("itemQuantity")[1]
+          .addEventListener("change", doThing);
+
+        function doThing() {
+          console.log(this.value);
+        }
       })
+
       .catch(function (err) {
         // Une erreur est survenue
       });
