@@ -121,7 +121,7 @@ if (obj === null) {
         totalPrice.innerText = newprice;
 
         document
-          .getElementsByName("itemQuantity")[1]
+          .getElementsByName("itemQuantity")[0]
           .addEventListener("change", doThing);
 
         function doThing() {
