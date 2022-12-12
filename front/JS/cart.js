@@ -88,6 +88,18 @@ if (obj === null) {
         itemQuantity.setAttribute("max", 100);
         itemQuantity.setAttribute("value", product.quantity);
 
+        document
+          .getElementsByName("itemQuantity")
+          [articleindex].addEventListener("change", doThing);
+
+        function doThing() {
+          let leo = this.value;
+          leo = parseInt(leo);
+          paniers.push(leo);
+          console.log(leo);
+          localStorage.setItem("Panier", JSON.stringify(paniers));
+        }
+
         const localStorageContent = localStorage.getItem("Panier");
         let paniers;
         if (localStorageContent === null) {
@@ -119,13 +131,6 @@ if (obj === null) {
         newprice = newprice + data.price;
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = newprice;
-
-        document
-          .getElementsByName("itemQuantity")[0]
-          .addEventListener("change", doThing);
-        function doThing() {
-          console.log(this.value);
-        }
       })
       .catch(function (err) {
         // Une erreur est survenue
