@@ -120,20 +120,13 @@ if (obj === null) {
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = newprice;
 
-        newquantity = newquantity + product.quantity;
-        console.log(product.quantity);
-
-        {
-          for (let i = 0; i < newquantity; i++)
-            document
-              .getElementsByName("itemQuantity")
-              .addEventListener("change", doThing);
-          function doThing() {
-            console.log(this.value);
-          }
+        document
+          .getElementsByName("itemQuantity")[0]
+          .addEventListener("change", doThing);
+        function doThing() {
+          console.log(this.value);
         }
       })
-
       .catch(function (err) {
         // Une erreur est survenue
       });
