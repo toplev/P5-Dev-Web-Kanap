@@ -90,13 +90,32 @@ if (obj === null) {
 
         document
           .getElementsByName("itemQuantity")
-          [articleindex].addEventListener("change", doThing);
+          [articleindex].addEventListener("change", changequantity);
 
-        function doThing() {
-          let leo = this.value;
-          leo = parseInt(leo);
-          paniers.push(leo);
-          console.log(leo);
+        function changequantity() {
+          let newquantity = this.value;
+          newquantity = parseInt(newquantity);
+
+          let productToAdd = {
+            Id: product.Id,
+            color: product.color,
+            quantity: newquantity,
+          };
+          let productalredy = false;
+
+          paniers.forEach((product) => {
+            if (
+              product.Id === productToAdd.Id &&
+              product.color === productToAdd.color
+            ) {
+              product.quantity = newquantity;
+              productalredy = true;
+              return;
+            }
+          });
+          if (!productalredy) {
+            paniers.push(productToAdd);
+          }
           localStorage.setItem("Panier", JSON.stringify(paniers));
         }
 
