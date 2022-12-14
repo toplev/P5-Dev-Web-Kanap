@@ -87,7 +87,7 @@ if (obj === null) {
         itemQuantity.setAttribute("min", 1);
         itemQuantity.setAttribute("max", 100);
         itemQuantity.setAttribute("value", product.quantity);
-
+        let paniers = localStorage.getItem("Panier");
         document
           .getElementsByName("itemQuantity")
           [articleindex].addEventListener("change", changequantity);
@@ -96,31 +96,21 @@ if (obj === null) {
           let newquantity = this.value;
           newquantity = parseInt(newquantity);
 
-          let productToAdd = {
-            Id: product.Id,
-            color: product.color,
-            quantity: newquantity,
-          };
-          let productalredy = false;
-
-          paniers.forEach((product) => {
+          paniers.forEach((updatequantity) => {
             if (
-              product.Id === productToAdd.Id &&
-              product.color === productToAdd.color
+              product.Id === updatequantity.Id &&
+              updatequantity.color === product.color
             ) {
-              product.quantity = newquantity;
-              productalredy = true;
-              return;
+              updatequantity.quantity = newquantity;
             }
           });
-          if (!productalredy) {
-            paniers.push(productToAdd);
-          }
+          console.log(paniers);
+          localStorage.removeItem("Panier", JSON.stringify(paniers));
           localStorage.setItem("Panier", JSON.stringify(paniers));
         }
 
         const localStorageContent = localStorage.getItem("Panier");
-        let paniers;
+
         if (localStorageContent === null) {
           paniers = [];
         } else {
