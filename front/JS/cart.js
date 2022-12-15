@@ -87,15 +87,16 @@ if (obj === null) {
         itemQuantity.setAttribute("min", 1);
         itemQuantity.setAttribute("max", 100);
         itemQuantity.setAttribute("value", product.quantity);
-        let paniers = localStorage.getItem("Panier");
+
         document
           .getElementsByName("itemQuantity")
           [articleindex].addEventListener("change", changequantity);
 
         function changequantity() {
+          let paniers = JSON.parse(localStorage.getItem("Panier"));
           let newquantity = this.value;
           newquantity = parseInt(newquantity);
-
+          console.log(paniers);
           paniers.forEach((updatequantity) => {
             if (
               product.Id === updatequantity.Id &&
@@ -105,7 +106,6 @@ if (obj === null) {
             }
           });
           console.log(paniers);
-          localStorage.removeItem("Panier", JSON.stringify(paniers));
           localStorage.setItem("Panier", JSON.stringify(paniers));
         }
 
