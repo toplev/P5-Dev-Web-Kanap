@@ -110,10 +110,16 @@ if (obj === null) {
 
           const totalQuantity = document.getElementById("totalQuantity");
           totalQuantity.innerText = newnumberofproducts;
+
+          console.log(newquantity);
+          console.log(data.price);
+          leo = data.price * newquantity;
+          console.log(leo);
+          const totalPrice = document.getElementById("totalPrice");
+          totalPrice.innerText = leo;
         }
 
         const localStorageContent = localStorage.getItem("Panier");
-
         if (localStorageContent === null) {
           paniers = [];
         } else {
