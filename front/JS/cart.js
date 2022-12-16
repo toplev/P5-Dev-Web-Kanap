@@ -94,9 +94,9 @@ if (obj === null) {
 
         function changequantity() {
           let paniers = JSON.parse(localStorage.getItem("Panier"));
+          let newnumberofproducts = 0;
           let newquantity = this.value;
           newquantity = parseInt(newquantity);
-          console.log(paniers);
           paniers.forEach((updatequantity) => {
             if (
               product.Id === updatequantity.Id &&
@@ -104,9 +104,12 @@ if (obj === null) {
             ) {
               updatequantity.quantity = newquantity;
             }
+            newnumberofproducts += updatequantity.quantity;
           });
-          console.log(paniers);
           localStorage.setItem("Panier", JSON.stringify(paniers));
+
+          const totalQuantity = document.getElementById("totalQuantity");
+          totalQuantity.innerText = newnumberofproducts;
         }
 
         const localStorageContent = localStorage.getItem("Panier");
