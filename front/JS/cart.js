@@ -113,7 +113,7 @@ if (obj === null) {
 
           console.log(newquantity);
           console.log(data.price);
-          leo = data.price * newquantity;
+          leo += data.price * newquantity;
           console.log(leo);
           const totalPrice = document.getElementById("totalPrice");
           totalPrice.innerText = leo;
