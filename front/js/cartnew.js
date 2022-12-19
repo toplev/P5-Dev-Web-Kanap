@@ -1,11 +1,41 @@
 let panier = localStorage.getItem("Panier");
-let obj = JSON.parse(panier);
-let articleindex = 0;
-let newprice = 0;
-if (obj === null) {
-  console.log("Panier Vide");
+
+if (panier === null) {
+  panier = [];
 } else {
-  obj.forEach((product) => {
+  panier = JSON.parse(panier);
+  afficherpaniers();
+}
+
+function changequantity(event) {
+  let product = event.currentTarget.product;
+  let newquantity = event.target.value;
+  let newnumberofproducts = 0;
+
+  newquantity = parseInt(newquantity);
+  panier.forEach((updatequantity) => {
+    if (
+      product.Id === updatequantity.Id &&
+      updatequantity.color === product.color
+    ) {
+      updatequantity.quantity = newquantity;
+    }
+    newnumberofproducts += updatequantity.quantity;
+  });
+  localStorage.setItem("Panier", JSON.stringify(panier));
+
+  const totalQuantity = document.getElementById("totalQuantity");
+  totalQuantity.innerText = newnumberofproducts;
+
+  totalprice();
+}
+
+function afficherpaniers() {
+  let articleindex = 0;
+  let totalprice = 0;
+  let numberofproducts = 0;
+
+  panier.forEach((product) => {
     fetch("http://localhost:3000/api/products/" + product.Id)
       .then((res) => {
         if (res.ok) {
@@ -88,50 +118,6 @@ if (obj === null) {
         itemQuantity.setAttribute("max", 100);
         itemQuantity.setAttribute("value", product.quantity);
 
-        var newtotalPrice = data.price;
-        {
-          newtotalPrice = [];
-          newtotalPrice.push(data.price);
-        }
-        console.log(newtotalPrice);
-
-        document
-          .getElementsByName("itemQuantity")
-          [articleindex].addEventListener("change", changequantity);
-
-        function changequantity() {
-          console.log(newtotalPrice);
-          let paniers = JSON.parse(localStorage.getItem("Panier"));
-          let newnumberofproducts = 0;
-          let newquantity = this.value;
-          newquantity = parseInt(newquantity);
-          paniers.forEach((updatequantity) => {
-            if (
-              product.Id === updatequantity.Id &&
-              updatequantity.color === product.color
-            ) {
-              updatequantity.quantity = newquantity;
-            }
-            newnumberofproducts += updatequantity.quantity;
-            console.log(updatequantity.quantity);
-          });
-          localStorage.setItem("Panier", JSON.stringify(paniers));
-
-          const totalQuantity = document.getElementById("totalQuantity");
-          totalQuantity.innerText = newnumberofproducts;
-        }
-
-        const localStorageContent = localStorage.getItem("Panier");
-
-        if (localStorageContent === null) {
-          paniers = [];
-        } else {
-          paniers = JSON.parse(localStorageContent);
-        }
-        let numberofproducts = 0;
-        paniers.forEach((product) => {
-          numberofproducts += product.quantity;
-        });
         const cart__contentdelete = document.createElement("div");
         cart__settings.appendChild(cart__contentdelete);
         cart__contentdelete.classList.add(
@@ -143,50 +129,40 @@ if (obj === null) {
         cartitemdelete.classList.add("deleteItem");
         cartitemdelete.innerText = "Supprimer";
 
-        articleindex++;
+        const itemQuantityEl =
+          document.getElementsByName("itemQuantity")[articleindex];
+        itemQuantityEl.product = product;
+        itemQuantityEl.addEventListener("change", changequantity);
 
+        totalprice += product.quantity * data.price;
+        numberofproducts += product.quantity;
+        articleindex++;
+      })
+      .then((data) => {
         const totalQuantity = document.getElementById("totalQuantity");
         totalQuantity.innerText = numberofproducts;
 
-        newprice = newprice + data.price;
         const totalPrice = document.getElementById("totalPrice");
-        totalPrice.innerText = newprice;
-
-        //console.log(product.quantity);
-        //console.log(data.price);
-        //console.log(product);
-        //console.log(product.Id);
-        //console.log(product.quantity);
-        //console.log(data);
-        //console.log(data.price);
-        //console.log(panier);
-        //console.log(obj);
-        //console.log(obj[articleindex].color);
-        //console.log(obj[articleindex]);
-        //console.log(obj[articleindex].quantity);
-        //console.log(product);
-        //obj.forEach((leo) => {
-        //console.log(leo);
-        //console.log(leo.Id);
-        //console.log(leo.color);
-        //console.log(leo.quantity);
-        //});
-      })
-      .catch(function (err) {
-        // Une erreur est survenue
+        totalPrice.innerText = totalprice;
       });
   });
-  /*obj.forEach((leo) => {
-    console.log(leo);
-    console.log(leo.Id);
-    console.log(leo.color);
-    console.log(leo.quantity);
-  });*/
 }
-/*console.log(obj);
-obj.forEach((leo) => {
-  console.log(leo);
-  console.log(leo.Id);
-  console.log(leo.color);
-  console.log(leo.quantity);
-});*/
+
+function totalprice() {
+  let totalprice = 0;
+  panier.forEach((product) => {
+    fetch("http://localhost:3000/api/products/" + product.Id)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        totalprice += product.quantity * data.price;
+      })
+      .then((data) => {
+        const totalPrice = document.getElementById("totalPrice");
+        totalPrice.innerText = totalprice;
+      });
+  });
+}
