@@ -142,6 +142,9 @@ function afficherpaniers() {
 
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = totalprice;
+
+        const commander = document.querySelector("#order");
+        commander.addEventListener("click", validerlacommande);
       });
   });
 }
@@ -191,4 +194,41 @@ function resetpanier() {
   document.getElementById("cart__items").innerHTML = "";
   document.getElementById("totalQuantity").innerHTML = "";
   document.getElementById("totalPrice").innerHTML = "";
+}
+
+function validerlacommande() {
+  /**
+   *
+   * Expects request to contain:
+   * contact: {
+   *   firstName: string,
+   *   lastName: string,
+   *   address: string,
+   *   city: string,
+   *   email: string
+   * }
+   * products: [string] <-- array of product _id
+   *
+   */
+  let nowyouhavetopay = [];
+
+  let firstName = document.querySelector("#firstName");
+  let lastName = document.querySelector("#lastName");
+  let address = document.querySelector("#address");
+  let city = document.querySelector("#city");
+  let email = document.querySelector("#email");
+
+  let readycommande = {
+    contact: {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    },
+    products: nowyouhavetopay,
+  };
+
+  panier.push(readycommande);
+  localStorage.setItem("Panier", JSON.stringify(panier));
 }
