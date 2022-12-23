@@ -229,6 +229,22 @@ function validerlacommande() {
     products: nowyouhavetopay,
   };
 
-  panier.push(readycommande);
-  localStorage.setItem("Panier", JSON.stringify(panier));
+  const order = readycommande;
+
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(order),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      document.location.href = "confirmation.html";
+      localStorage.setItem("orderId", data.orderId);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
