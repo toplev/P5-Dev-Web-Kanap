@@ -9,8 +9,6 @@ fetch("http://localhost:3000/api/products/" + id)
     }
   })
   .then((data) => {
-    console.log(data);
-
     const image = document.getElementsByClassName("item__img")[0];
     const element_img = document.createElement("img");
     image.appendChild(element_img);
@@ -44,7 +42,7 @@ fetch("http://localhost:3000/api/products/" + id)
     }
   })
   .catch(function (err) {
-    // Une erreur est survenue
+    alert("API hors ligne");
   });
 
 const buttonPanier = document.getElementById("addToCart");
@@ -60,8 +58,6 @@ buttonPanier.addEventListener("click", function () {
   } else {
     paniers = JSON.parse(localStorageContent);
   }
-
-  console.log(paniers);
 
   let productToAdd = {
     Id: id,
@@ -85,4 +81,5 @@ buttonPanier.addEventListener("click", function () {
     paniers.push(productToAdd);
   }
   localStorage.setItem("Panier", JSON.stringify(paniers));
+  alert("Le produit a été ajouté au Panier");
 });

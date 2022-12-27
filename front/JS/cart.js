@@ -1,11 +1,37 @@
-let panier = localStorage.getItem("Panier");
-let obj = JSON.parse(panier);
-let articleindex = 0;
-let newprice = 0;
-if (obj === null) {
-  console.log("Panier Vide");
-} else {
-  obj.forEach((product) => {
+let panier;
+
+updatelocalstorage();
+
+function changequantity(event) {
+  let product = event.currentTarget.product;
+  let newquantity = event.target.value;
+  let newnumberofproducts = 0;
+
+  newquantity = parseInt(newquantity);
+  panier.forEach((updatequantity) => {
+    if (
+      product.Id === updatequantity.Id &&
+      updatequantity.color === product.color
+    ) {
+      updatequantity.quantity = newquantity;
+    }
+    newnumberofproducts += updatequantity.quantity;
+  });
+  localStorage.setItem("Panier", JSON.stringify(panier));
+
+  const totalQuantity = document.getElementById("totalQuantity");
+  totalQuantity.innerText = newnumberofproducts;
+
+  totalprice();
+}
+
+function afficherpaniers() {
+  resetpanier();
+  let articleindex = 0;
+  let totalprice = 0;
+  let numberofproducts = 0;
+
+  panier.forEach((product) => {
     fetch("http://localhost:3000/api/products/" + product.Id)
       .then((res) => {
         if (res.ok) {
@@ -88,50 +114,6 @@ if (obj === null) {
         itemQuantity.setAttribute("max", 100);
         itemQuantity.setAttribute("value", product.quantity);
 
-        var newtotalPrice = data.price;
-        {
-          newtotalPrice = [];
-          newtotalPrice.push(data.price);
-        }
-        console.log(newtotalPrice);
-
-        document
-          .getElementsByName("itemQuantity")
-          [articleindex].addEventListener("change", changequantity);
-
-        function changequantity() {
-          console.log(newtotalPrice);
-          let paniers = JSON.parse(localStorage.getItem("Panier"));
-          let newnumberofproducts = 0;
-          let newquantity = this.value;
-          newquantity = parseInt(newquantity);
-          paniers.forEach((updatequantity) => {
-            if (
-              product.Id === updatequantity.Id &&
-              updatequantity.color === product.color
-            ) {
-              updatequantity.quantity = newquantity;
-            }
-            newnumberofproducts += updatequantity.quantity;
-            console.log(updatequantity.quantity);
-          });
-          localStorage.setItem("Panier", JSON.stringify(paniers));
-
-          const totalQuantity = document.getElementById("totalQuantity");
-          totalQuantity.innerText = newnumberofproducts;
-        }
-
-        const localStorageContent = localStorage.getItem("Panier");
-
-        if (localStorageContent === null) {
-          paniers = [];
-        } else {
-          paniers = JSON.parse(localStorageContent);
-        }
-        let numberofproducts = 0;
-        paniers.forEach((product) => {
-          numberofproducts += product.quantity;
-        });
         const cart__contentdelete = document.createElement("div");
         cart__settings.appendChild(cart__contentdelete);
         cart__contentdelete.classList.add(
@@ -142,18 +124,137 @@ if (obj === null) {
         cart__contentdelete.appendChild(cartitemdelete);
         cartitemdelete.classList.add("deleteItem");
         cartitemdelete.innerText = "Supprimer";
+        cartitemdelete.product = product;
+        cartitemdelete.addEventListener("click", deleteitem);
 
+        const itemQuantityEl =
+          document.getElementsByName("itemQuantity")[articleindex];
+        itemQuantityEl.product = product;
+        itemQuantityEl.addEventListener("change", changequantity);
+
+        totalprice += product.quantity * data.price;
+        numberofproducts += product.quantity;
         articleindex++;
-
+      })
+      .then((data) => {
         const totalQuantity = document.getElementById("totalQuantity");
         totalQuantity.innerText = numberofproducts;
 
-        newprice = newprice + data.price;
         const totalPrice = document.getElementById("totalPrice");
-        totalPrice.innerText = newprice;
-      })
-      .catch(function (err) {
-        // Une erreur est survenue
+        totalPrice.innerText = totalprice;
+
+        const commander = document.querySelector("#order");
+        commander.addEventListener("click", validerlacommande);
       });
   });
+}
+
+function totalprice() {
+  let totalprice = 0;
+  panier.forEach((product) => {
+    fetch("http://localhost:3000/api/products/" + product.Id)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        totalprice += product.quantity * data.price;
+      })
+      .then((data) => {
+        const totalPrice = document.getElementById("totalPrice");
+        totalPrice.innerText = totalprice;
+      });
+  });
+}
+
+function deleteitem(event) {
+  const found = panier.findIndex(
+    (product) =>
+      product.Id === event.currentTarget.product.Id &&
+      event.currentTarget.product.color === product.color
+  );
+  panier.splice(found, 1);
+  localStorage.setItem("Panier", JSON.stringify(panier));
+  updatelocalstorage();
+}
+
+function updatelocalstorage() {
+  panier = localStorage.getItem("Panier");
+
+  if (panier === null) {
+    panier = [];
+  } else {
+    panier = JSON.parse(panier);
+    afficherpaniers();
+  }
+}
+
+function resetpanier() {
+  document.getElementById("cart__items").innerHTML = "";
+  document.getElementById("totalQuantity").innerHTML = "";
+  document.getElementById("totalPrice").innerHTML = "";
+}
+
+function validerlacommande() {
+  /**
+   *
+   * Expects request to contain:
+   * contact: {
+   *   firstName: string,
+   *   lastName: string,
+   *   address: string,
+   *   city: string,
+   *   email: string
+   * }
+   * products: [string] <-- array of product _id
+   *
+   */
+  let nowyouhavetopay = [];
+
+  let firstName = document.querySelector("#firstName");
+  let lastName = document.querySelector("#lastName");
+  let address = document.querySelector("#address");
+  let city = document.querySelector("#city");
+  let email = document.querySelector("#email");
+
+  let readycommande = {
+    contact: {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    },
+    products: nowyouhavetopay,
+  };
+
+  if (
+    firstName.value === "" ||
+    lastName.value === "" ||
+    address.value === "" ||
+    city.value === "" ||
+    email.value === ""
+  ) {
+    alert("Merci de remplir tous les champs ");
+  } else {
+    const order = readycommande;
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.location.href = "confirmation.html";
+        localStorage.setItem("orderId", data.orderId);
+        localStorage.removeItem("Panier", JSON.stringify(panier));
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 }

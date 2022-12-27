@@ -8,7 +8,6 @@ fetch("http://localhost:3000/api/products")
   })
   .then((data) => {
     for (let i = 0; i <= data.length; i++) {
-      console.log(data[i]);
       const element_a = document.createElement("a");
       produits.appendChild(element_a);
       element_a.href += "product.html?id=" + data[i]._id;
@@ -29,6 +28,4 @@ fetch("http://localhost:3000/api/products")
       element_p.innerText = data[i].description;
     }
   })
-  .catch(function (err) {
-    // Une erreur est survenue
-  });
+  .catch(function (err) {});
