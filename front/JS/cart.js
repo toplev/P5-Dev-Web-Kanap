@@ -151,42 +151,9 @@ if (obj === null) {
         newprice = newprice + data.price;
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = newprice;
-
-        //console.log(product.quantity);
-        //console.log(data.price);
-        //console.log(product);
-        //console.log(product.Id);
-        //console.log(product.quantity);
-        //console.log(data);
-        //console.log(data.price);
-        //console.log(panier);
-        //console.log(obj);
-        //console.log(obj[articleindex].color);
-        //console.log(obj[articleindex]);
-        //console.log(obj[articleindex].quantity);
-        //console.log(product);
-        //obj.forEach((leo) => {
-        //console.log(leo);
-        //console.log(leo.Id);
-        //console.log(leo.color);
-        //console.log(leo.quantity);
-        //});
       })
       .catch(function (err) {
         // Une erreur est survenue
       });
   });
-  /*obj.forEach((leo) => {
-    console.log(leo);
-    console.log(leo.Id);
-    console.log(leo.color);
-    console.log(leo.quantity);
-  });*/
 }
-/*console.log(obj);
-obj.forEach((leo) => {
-  console.log(leo);
-  console.log(leo.Id);
-  console.log(leo.color);
-  console.log(leo.quantity);
-});*/

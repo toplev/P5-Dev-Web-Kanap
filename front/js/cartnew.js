@@ -232,7 +232,7 @@ function validerlacommande() {
   const order = readycommande;
 
   fetch("http://localhost:3000/api/products/order", {
-    method: "POST", // or 'PUT'
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
