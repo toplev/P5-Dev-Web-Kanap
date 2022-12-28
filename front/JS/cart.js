@@ -183,7 +183,7 @@ function updatelocalstorage() {
   panier = localStorage.getItem("Panier");
 
   if (panier === null) {
-    panier = [];
+    document.querySelector("#order").disabled = true;
   } else {
     panier = JSON.parse(panier);
     afficherpaniers();
@@ -229,14 +229,24 @@ function validerlacommande() {
     products: nowyouhavetopay,
   };
 
+  function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    }
+    alert("Merci de vérifier le format de votre mail");
+    return false;
+  }
+
+  var valideMail = ValidateEmail(email.value);
+
   if (
     firstName.value === "" ||
     lastName.value === "" ||
     address.value === "" ||
     city.value === "" ||
-    email.value === ""
+    valideMail === false
   ) {
-    alert("Merci de remplir tous les champs ");
+    alert("Merci de vérifier tous les champs ");
   } else {
     const order = readycommande;
 
