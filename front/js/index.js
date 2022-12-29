@@ -1,3 +1,5 @@
+//Faire apparaitre les produits de API dans HTML //
+
 const produits = document.getElementById("items");
 
 fetch("http://localhost:3000/api/products")
@@ -28,4 +30,6 @@ fetch("http://localhost:3000/api/products")
       element_p.innerText = data[i].description;
     }
   })
-  .catch(function (err) {});
+  .catch(function (err) {
+    console.log(err);
+  });

@@ -1,6 +1,10 @@
+//Utilisation de SearchParams afin de recuperer ID dans API //
+
 const apiID = window.location.search;
 const urlParams = new URLSearchParams(apiID);
 const id = urlParams.get("id");
+
+//Ajout ID + les informations sur le produits depuis API dans HTML //
 
 fetch("http://localhost:3000/api/products/" + id)
   .then((res) => {
@@ -42,14 +46,19 @@ fetch("http://localhost:3000/api/products/" + id)
     }
   })
   .catch(function (err) {
-    alert("API hors ligne");
+    console.log(err);
+    alert("Vérifiez votre connexion avec API");
   });
+
+//Ecouter le bouton "Ajouter au panier"//
 
 const buttonPanier = document.getElementById("addToCart");
 buttonPanier.addEventListener("click", function () {
   let select = document.getElementById("colors").value;
   let quantity = document.getElementById("quantity").value;
   quantity = parseInt(quantity);
+
+  //Recuperations panier localStorage//
 
   const localStorageContent = localStorage.getItem("Panier");
   let paniers;
@@ -58,6 +67,8 @@ buttonPanier.addEventListener("click", function () {
   } else {
     paniers = JSON.parse(localStorageContent);
   }
+
+  //Recuperations/Vérification informations ID + la couleur et la quantité//
 
   let productToAdd = {
     Id: id,
@@ -76,6 +87,8 @@ buttonPanier.addEventListener("click", function () {
       return;
     }
   });
+
+  //Ajouter le produit dans localStorage//
 
   if (!productalredy) {
     paniers.push(productToAdd);

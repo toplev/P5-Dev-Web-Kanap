@@ -1,35 +1,33 @@
+//déclaration panier//
+
 let panier;
+
+//Mettre à jour localstorage//
 
 updatelocalstorage();
 
-function changequantity(event) {
-  let product = event.currentTarget.product;
-  let newquantity = event.target.value;
-  let newnumberofproducts = 0;
+//Vérifir localstorage si vide desactiver le bouton Commander sinon afficher le panier/localstorage //
 
-  newquantity = parseInt(newquantity);
-  panier.forEach((updatequantity) => {
-    if (
-      product.Id === updatequantity.Id &&
-      updatequantity.color === product.color
-    ) {
-      updatequantity.quantity = newquantity;
-    }
-    newnumberofproducts += updatequantity.quantity;
-  });
-  localStorage.setItem("Panier", JSON.stringify(panier));
+function updatelocalstorage() {
+  panier = localStorage.getItem("Panier");
 
-  const totalQuantity = document.getElementById("totalQuantity");
-  totalQuantity.innerText = newnumberofproducts;
-
-  totalprice();
+  if (panier === null) {
+    document.querySelector("#order").disabled = true;
+  } else {
+    panier = JSON.parse(panier);
+    afficherpaniers();
+  }
 }
+
+//Vider le panier/hmtl et Afficher les produits avec API + Localstorage//
 
 function afficherpaniers() {
   resetpanier();
   let articleindex = 0;
   let totalprice = 0;
   let numberofproducts = 0;
+
+  //Ajout ID + les informations sur les produits depuis API dans HTML //
 
   panier.forEach((product) => {
     fetch("http://localhost:3000/api/products/" + product.Id)
@@ -125,12 +123,16 @@ function afficherpaniers() {
         cartitemdelete.classList.add("deleteItem");
         cartitemdelete.innerText = "Supprimer";
         cartitemdelete.product = product;
+        //Ecouter bouton Supprimer et lancer fonctionne deleteitem si besoin //
         cartitemdelete.addEventListener("click", deleteitem);
 
         const itemQuantityEl =
           document.getElementsByName("itemQuantity")[articleindex];
         itemQuantityEl.product = product;
+        //Ecouter bouton quantité et lancer fonctionne changequantity si besoin //
         itemQuantityEl.addEventListener("change", changequantity);
+
+        //Calcul prix total avec le prix et la quantité //
 
         totalprice += product.quantity * data.price;
         numberofproducts += product.quantity;
@@ -143,11 +145,61 @@ function afficherpaniers() {
         const totalPrice = document.getElementById("totalPrice");
         totalPrice.innerText = totalprice;
 
+        //Ecouter bouton Commander et lancer valider la commande //
+
         const commander = document.querySelector("#order");
         commander.addEventListener("click", validerlacommande);
       });
   });
 }
+
+//vider le panier avant affichage depuis localStorage  //
+
+function resetpanier() {
+  document.getElementById("cart__items").innerHTML = "";
+  document.getElementById("totalQuantity").innerHTML = "";
+  document.getElementById("totalPrice").innerHTML = "";
+}
+
+//supprimer le produit et lancer updatelocalstorage //
+
+function deleteitem(event) {
+  const found = panier.findIndex(
+    (product) =>
+      product.Id === event.currentTarget.product.Id &&
+      event.currentTarget.product.color === product.color
+  );
+  panier.splice(found, 1);
+  localStorage.setItem("Panier", JSON.stringify(panier));
+  updatelocalstorage();
+}
+
+//modifier la quantité et afficher le prix total//
+
+function changequantity(event) {
+  let product = event.currentTarget.product;
+  let newquantity = event.target.value;
+  let newnumberofproducts = 0;
+
+  newquantity = parseInt(newquantity);
+  panier.forEach((updatequantity) => {
+    if (
+      product.Id === updatequantity.Id &&
+      updatequantity.color === product.color
+    ) {
+      updatequantity.quantity = newquantity;
+    }
+    newnumberofproducts += updatequantity.quantity;
+  });
+  localStorage.setItem("Panier", JSON.stringify(panier));
+
+  const totalQuantity = document.getElementById("totalQuantity");
+  totalQuantity.innerText = newnumberofproducts;
+
+  totalprice();
+}
+
+// afficher le prix total//
 
 function totalprice() {
   let totalprice = 0;
@@ -166,34 +218,6 @@ function totalprice() {
         totalPrice.innerText = totalprice;
       });
   });
-}
-
-function deleteitem(event) {
-  const found = panier.findIndex(
-    (product) =>
-      product.Id === event.currentTarget.product.Id &&
-      event.currentTarget.product.color === product.color
-  );
-  panier.splice(found, 1);
-  localStorage.setItem("Panier", JSON.stringify(panier));
-  updatelocalstorage();
-}
-
-function updatelocalstorage() {
-  panier = localStorage.getItem("Panier");
-
-  if (panier === null) {
-    document.querySelector("#order").disabled = true;
-  } else {
-    panier = JSON.parse(panier);
-    afficherpaniers();
-  }
-}
-
-function resetpanier() {
-  document.getElementById("cart__items").innerHTML = "";
-  document.getElementById("totalQuantity").innerHTML = "";
-  document.getElementById("totalPrice").innerHTML = "";
 }
 
 function validerlacommande() {
