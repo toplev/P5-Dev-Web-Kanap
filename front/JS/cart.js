@@ -23,9 +23,9 @@ function updatelocalstorage() {
 
 function afficherpaniers() {
   resetpanier();
-  let articleindex = 0;
-  let totalprice = 0;
-  let numberofproducts = 0;
+  let articleIndex = 0;
+  let totalPrice = 0;
+  let numberOfProducts = 0;
 
   //Ajout ID + les informations sur les produits depuis API dans HTML //
 
@@ -45,27 +45,27 @@ function afficherpaniers() {
         items.appendChild(cart__article);
 
         const itemimg =
-          document.getElementsByClassName("cart__item")[articleindex];
+          document.getElementsByClassName("cart__item")[articleIndex];
         const cart__item__img = document.createElement("div");
         itemimg.appendChild(cart__item__img);
         cart__item__img.classList.add("cart__item__img");
 
         const image =
-          document.getElementsByClassName("cart__item__img")[articleindex];
+          document.getElementsByClassName("cart__item__img")[articleIndex];
         const element_img = document.createElement("img");
         element_img.src = data.imageUrl;
         element_img.setAttribute("alt", "Photographie d'un canapé");
         image.appendChild(element_img);
 
         const itemcontent =
-          document.getElementsByClassName("cart__item")[articleindex];
+          document.getElementsByClassName("cart__item")[articleIndex];
         const cart__content = document.createElement("div");
         itemcontent.appendChild(cart__content);
         cart__content.classList.add("cart__item__content");
 
         const itemcontentdescription = document.getElementsByClassName(
           "cart__item__content"
-        )[articleindex];
+        )[articleIndex];
         const cart__description = document.createElement("div");
         itemcontentdescription.appendChild(cart__description);
         cart__description.classList.add("cart__item__content__description");
@@ -88,7 +88,7 @@ function afficherpaniers() {
 
         const itemcontentsettings = document.getElementsByClassName(
           "cart__item__content"
-        )[articleindex];
+        )[articleIndex];
         const cart__settings = document.createElement("div");
         itemcontentsettings.appendChild(cart__settings);
         cart__settings.classList.add("cart__item__content__settings");
@@ -127,23 +127,23 @@ function afficherpaniers() {
         cartitemdelete.addEventListener("click", deleteitem);
 
         const itemQuantityEl =
-          document.getElementsByName("itemQuantity")[articleindex];
+          document.getElementsByName("itemQuantity")[articleIndex];
         itemQuantityEl.product = product;
         //Ecouter bouton quantité et lancer fonctionne changequantity si besoin //
         itemQuantityEl.addEventListener("change", changequantity);
 
         //Calcul prix total avec le prix et la quantité //
 
-        totalprice += product.quantity * data.price;
-        numberofproducts += product.quantity;
-        articleindex++;
+        totalPrice += product.quantity * data.price;
+        numberOfProducts += product.quantity;
+        articleIndex++;
       })
       .then((data) => {
         const totalQuantity = document.getElementById("totalQuantity");
-        totalQuantity.innerText = numberofproducts;
+        totalQuantity.innerText = numberOfProducts;
 
-        const totalPrice = document.getElementById("totalPrice");
-        totalPrice.innerText = totalprice;
+        const totalNewPrice = document.getElementById("totalPrice");
+        totalNewPrice.innerText = totalPrice;
 
         //Ecouter bouton Commander et lancer valider la commande //
 
@@ -178,31 +178,31 @@ function deleteitem(event) {
 
 function changequantity(event) {
   let product = event.currentTarget.product;
-  let newquantity = event.target.value;
-  let newnumberofproducts = 0;
+  let newQuantity = event.target.value;
+  let newNumberOfProducts = 0;
 
-  newquantity = parseInt(newquantity);
-  panier.forEach((updatequantity) => {
+  newQuantity = parseInt(newQuantity);
+  panier.forEach((updatEquantity) => {
     if (
-      product.Id === updatequantity.Id &&
-      updatequantity.color === product.color
+      product.Id === updatEquantity.Id &&
+      updatEquantity.color === product.color
     ) {
-      updatequantity.quantity = newquantity;
+      updatEquantity.quantity = newQuantity;
     }
-    newnumberofproducts += updatequantity.quantity;
+    newNumberOfProducts += updatEquantity.quantity;
   });
   localStorage.setItem("Panier", JSON.stringify(panier));
 
   const totalQuantity = document.getElementById("totalQuantity");
-  totalQuantity.innerText = newnumberofproducts;
+  totalQuantity.innerText = newNumberOfProducts;
 
-  totalprice();
+  calculatetotalprice();
 }
 
 // afficher le prix total//
 
-function totalprice() {
-  let totalprice = 0;
+function calculatetotalprice() {
+  let totalPrice = 0;
   panier.forEach((product) => {
     fetch("http://localhost:3000/api/products/" + product.Id)
       .then((res) => {
@@ -211,11 +211,11 @@ function totalprice() {
         }
       })
       .then((data) => {
-        totalprice += product.quantity * data.price;
+        totalPrice += product.quantity * data.price;
       })
       .then((data) => {
-        const totalPrice = document.getElementById("totalPrice");
-        totalPrice.innerText = totalprice;
+        const totalNewPrice = document.getElementById("totalPrice");
+        totalNewPrice.innerText = totalPrice;
       });
   });
 }
@@ -234,7 +234,7 @@ function validerlacommande() {
    * products: [string] <-- array of product _id
    *
    */
-  let nowyouhavetopay = [];
+  let nowYouHaveToPay = [];
 
   let firstName = document.querySelector("#firstName");
   let lastName = document.querySelector("#lastName");
@@ -242,7 +242,7 @@ function validerlacommande() {
   let city = document.querySelector("#city");
   let email = document.querySelector("#email");
 
-  let readycommande = {
+  let readyCommande = {
     contact: {
       firstName: firstName.value,
       lastName: lastName.value,
@@ -250,7 +250,7 @@ function validerlacommande() {
       city: city.value,
       email: email.value,
     },
-    products: nowyouhavetopay,
+    products: nowYouHaveToPay,
   };
 
   function ValidateEmail(mail) {
@@ -272,7 +272,7 @@ function validerlacommande() {
   ) {
     alert("Merci de vérifier tous les champs ");
   } else {
-    const order = readycommande;
+    const order = readyCommande;
 
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",

@@ -57,42 +57,44 @@ buttonPanier.addEventListener("click", function () {
   let select = document.getElementById("colors").value;
   let quantity = document.getElementById("quantity").value;
   quantity = parseInt(quantity);
-
-  //Recuperations panier localStorage//
-
-  const localStorageContent = localStorage.getItem("Panier");
-  let paniers;
-  if (localStorageContent === null) {
-    paniers = [];
+  if (select === "" || quantity === 0) {
+    alert("Merci de vérifier la couleur ou la quantité du produit");
   } else {
-    paniers = JSON.parse(localStorageContent);
-  }
-
-  //Recuperations/Vérification informations ID + la couleur et la quantité//
-
-  let productToAdd = {
-    Id: id,
-    color: select,
-    quantity: quantity,
-  };
-  let productalredy = false;
-
-  paniers.forEach((product) => {
-    if (
-      product.Id === productToAdd.Id &&
-      product.color === productToAdd.color
-    ) {
-      product.quantity += productToAdd.quantity;
-      productalredy = true;
-      return;
+    //Recuperations panier localStorage//
+    const localStorageContent = localStorage.getItem("Panier");
+    let paniers;
+    if (localStorageContent === null) {
+      paniers = [];
+    } else {
+      paniers = JSON.parse(localStorageContent);
     }
-  });
 
-  //Ajouter le produit dans localStorage//
+    //Recuperations/Vérification informations ID + la couleur et la quantité//
 
-  if (!productalredy) {
-    paniers.push(productToAdd);
+    let productToAdd = {
+      Id: id,
+      color: select,
+      quantity: quantity,
+    };
+    let productAlredy = false;
+
+    paniers.forEach((product) => {
+      if (
+        product.Id === productToAdd.Id &&
+        product.color === productToAdd.color
+      ) {
+        product.quantity += productToAdd.quantity;
+        productAlredy = true;
+        return;
+      }
+    });
+
+    //Ajouter le produit dans localStorage//
+
+    if (!productAlredy) {
+      paniers.push(productToAdd);
+    }
+    localStorage.setItem("Panier", JSON.stringify(paniers));
+    alert("Le produit a été ajouté au Panier");
   }
-  localStorage.setItem("Panier", JSON.stringify(paniers));
-  alert("Le produit a été ajouté au Panier");
 });

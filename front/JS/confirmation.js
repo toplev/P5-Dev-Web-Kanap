@@ -1,6 +1,6 @@
 //récuperer numéro de la commande depuis localStorage//
 
-var order = localStorage.getItem("orderId");
+let order = localStorage.getItem("orderId");
 
 //afficher numéro de la commande//
 
@@ -9,4 +9,4 @@ orderId.innerText = order;
 
 //Vider localStorage//
 
-var order = localStorage.removeItem("orderId");
+localStorage.removeItem("orderId");
