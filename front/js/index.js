@@ -6,10 +6,10 @@ fetch("http://localhost:3000/api/products")
   .then((res) => {
     if (res.ok) {
       return res.json();
-      console.log(res);
     }
   })
   .then((data) => {
+    console.log(data);
     for (let i = 0; i <= data.length; i++) {
       const element_a = document.createElement("a");
       produits.appendChild(element_a);
