@@ -1,5 +1,4 @@
 //récuperer numéro de la commande depuis localStorage//
-
 let order = localStorage.getItem("orderId");
 
 //afficher numéro de la commande//

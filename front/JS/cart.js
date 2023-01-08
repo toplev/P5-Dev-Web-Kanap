@@ -283,8 +283,8 @@ function validerlacommande() {
     })
       .then((response) => response.json())
       .then((data) => {
-        localStorage.setItem("orderId", data.orderId);
         document.location.href = "confirmation.html";
+        localStorage.setItem("orderId", data.orderId);
         localStorage.removeItem("Panier", JSON.stringify(panier));
       })
       .catch((error) => {
