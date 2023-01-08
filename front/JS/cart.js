@@ -276,10 +276,10 @@ function validerlacommande() {
 
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",
+      body: JSON.stringify(order),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(order),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -288,7 +288,7 @@ function validerlacommande() {
         localStorage.removeItem("Panier", JSON.stringify(panier));
       })
       .catch((error) => {
-        console.error(error);
+        alert("API HS : " + error);
       });
   }
 }
