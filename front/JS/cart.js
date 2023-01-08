@@ -1,7 +1,6 @@
 //déclaration panier//
 
 let panier;
-localStorage.removeItem("orderId");
 
 //Mettre à jour localstorage//
 
@@ -287,7 +286,7 @@ function validerlacommande() {
         document.location.href = "confirmation.html";
         localStorage.setItem("orderId", data.orderId);
         localStorage.removeItem("Panier");
-        //localStorage.removeItem("Panier", JSON.stringify(panier));
+        localStorage.removeItem("Panier", JSON.stringify(panier));
       })
       .catch((error) => {
         alert("API HS : " + error);
