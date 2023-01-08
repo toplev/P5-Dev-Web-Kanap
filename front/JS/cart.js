@@ -12,7 +12,7 @@ function updatelocalstorage() {
   panier = localStorage.getItem("Panier");
 
   if (panier === null) {
-    //document.querySelector("#order").disabled = true;
+    document.querySelector("#order").disabled = true;
   } else {
     panier = JSON.parse(panier);
     afficherpaniers();
