@@ -288,7 +288,7 @@ function validerlacommande() {
         localStorage.removeItem("Panier", JSON.stringify(panier));
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.log("alert");
       });
   }
 }
