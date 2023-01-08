@@ -268,7 +268,7 @@ function validerlacommande() {
     lastName.value === "" ||
     address.value === "" ||
     city.value === "" ||
-    valideMail === false
+    email.value === false
   ) {
     alert("Merci de vérifier tous les champs ");
   } else {
