@@ -221,7 +221,7 @@ function calculatetotalprice() {
 }
 
 function validerlacommande() {
-  /**
+  /*
    *
    * Expects request to contain:
    * contact: {
