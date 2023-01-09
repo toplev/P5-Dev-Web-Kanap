@@ -243,8 +243,6 @@ function validerlacommande() {
   let email = document.querySelector("#email");
   let nowYouHaveToPay = panier.map((product) => product.Id);
 
-  console.log(nowYouHaveToPay);
-
   let readyCommande = {
     contact: {
       firstName: firstName.value,
@@ -255,7 +253,6 @@ function validerlacommande() {
     },
     products: nowYouHaveToPay,
   };
-  console.log(nowYouHaveToPay);
 
   function ValidateEmail(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -285,8 +282,8 @@ function validerlacommande() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
+      .then((data) => {
+        return data.json();
       })
       .then((data) => {
         alert("Merci de noter le numéro de la commande");
