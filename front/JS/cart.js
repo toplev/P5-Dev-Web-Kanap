@@ -285,9 +285,9 @@ function validerlacommande() {
       },
       body: JSON.stringify(order),
     })
-      .then((response) => {
-        console.log(response);
-        return response.json();
+      .then((data) => {
+        console.log(data);
+        return data.json();
       })
       .then((data) => {
         //console.log(data);
