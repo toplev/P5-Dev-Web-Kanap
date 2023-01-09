@@ -255,6 +255,7 @@ function validerlacommande() {
     },
     products: nowYouHaveToPay,
   };
+  console.log(nowYouHaveToPay);
 
   function ValidateEmail(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -284,10 +285,14 @@ function validerlacommande() {
       },
       body: JSON.stringify(order),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((data) => {
+        //console.log(data);
         localStorage.setItem("orderId", data.orderId);
-        localStorage.removeItem("Panier");
+        //localStorage.removeItem("Panier");
         document.location.href = "confirmation.html";
       })
       .catch((error) => {

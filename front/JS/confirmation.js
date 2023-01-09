@@ -1,5 +1,6 @@
 //récuperer numéro de la commande depuis localStorage//
 let order = localStorage.getItem("orderId");
+localStorage.removeItem("Panier");
 
 //afficher numéro de la commande//
 
