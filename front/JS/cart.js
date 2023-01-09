@@ -234,13 +234,16 @@ function validerlacommande() {
    * products: [string] <-- array of product _id
    *
    */
-  let nowYouHaveToPay = [];
+  //let nowYouHaveToPay = [];
 
   let firstName = document.querySelector("#firstName");
   let lastName = document.querySelector("#lastName");
   let address = document.querySelector("#address");
   let city = document.querySelector("#city");
   let email = document.querySelector("#email");
+  let nowYouHaveToPay = panier.map((product) => product.Id);
+
+  console.log(nowYouHaveToPay);
 
   let readyCommande = {
     contact: {
