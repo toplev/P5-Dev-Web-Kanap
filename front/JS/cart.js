@@ -289,10 +289,11 @@ function validerlacommande() {
         return response.json();
       })
       .then((data) => {
-        //localStorage.setItem("orderId", data.orderId);
-        //alert("Voici votre n° de la commande" + data.orderId);
-        //localStorage.removeItem("Panier");
-        document.location.href = "confirmation.html?id=" + data.orderId;
+        alert("Merci de noter le numéro de la commande");
+        window.location = "confirmation.html?id=" + data.orderId;
+        localStorage.setItem("orderId", data.orderId);
+        alert("Voici votre n° de la commande : " + data.orderId);
+        window.location = "confirmation.html?id=" + data.orderId;
       })
       .catch((error) => {
         alert("API HS : " + error);
