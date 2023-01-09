@@ -280,20 +280,19 @@ function validerlacommande() {
 
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",
+      body: JSON.stringify(order),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(order),
     })
-      .then((data) => {
-        console.log(data);
-        return data.json();
+      .then((response) => {
+        return response.json();
       })
       .then((data) => {
-        //console.log(data);
-        localStorage.setItem("orderId", data.orderId);
+        //localStorage.setItem("orderId", data.orderId);
+        //alert("Voici votre n° de la commande" + data.orderId);
         //localStorage.removeItem("Panier");
-        document.location.href = "confirmation.html";
+        document.location.href = "confirmation.html?id=" + data.orderId;
       })
       .catch((error) => {
         alert("API HS : " + error);
