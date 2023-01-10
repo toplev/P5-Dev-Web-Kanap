@@ -144,11 +144,6 @@ function afficherpaniers() {
 
         const totalNewPrice = document.getElementById("totalPrice");
         totalNewPrice.innerText = totalPrice;
-
-        //Ecouter bouton Commander et lancer valider la commande //
-
-        const commander = document.querySelector("#order");
-        commander.addEventListener("click", validerlacommande);
       });
   });
 }
@@ -220,6 +215,8 @@ function calculatetotalprice() {
   });
 }
 
+// valider la commande//
+
 function validerlacommande() {
   /*
    *
@@ -234,7 +231,6 @@ function validerlacommande() {
    * products: [string] <-- array of product _id
    *
    */
-  //let nowYouHaveToPay = [];
 
   let firstName = document.querySelector("#firstName");
   let lastName = document.querySelector("#lastName");
@@ -286,8 +282,6 @@ function validerlacommande() {
         return data.json();
       })
       .then((data) => {
-        alert("Merci de noter le numéro de la commande");
-        window.location = "confirmation.html?id=" + data.orderId;
         localStorage.setItem("orderId", data.orderId);
         alert("Voici votre n° de la commande : " + data.orderId);
         window.location = "confirmation.html?id=" + data.orderId;
@@ -297,3 +291,12 @@ function validerlacommande() {
       });
   }
 }
+
+// desactiver submit du bouton "Commander" //
+
+let orderButton = document.querySelector("#order");
+
+orderButton.addEventListener("click", (eventOnClick) => {
+  eventOnClick.preventDefault();
+  validerlacommande();
+});
