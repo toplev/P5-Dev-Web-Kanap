@@ -258,12 +258,43 @@ function validerlacommande() {
     return false;
   }
 
+  function ValidateFirstName(firstName) {
+    if (/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(firstName)) {
+      return true;
+    }
+    alert("Merci de vérifier le format de votre prénom");
+    return false;
+  }
+
+  function ValidateLastName(lastName) {
+    if (
+      /^[A-Za-zÁČĎÉĚÍŇÓŘŠŤÚŮÝŽáčďéěíňóřšťúůýžÅÆÉØåæéøÉËÏÓÖÜéëïóöüÄÅÖäåöÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸàâæçéèêëïîôœùûüÿÄÖÜẞäöüßÁÉÍÖÓŐÜÚŰáéíöóőüúűÁÆÐÉÍÓÖÞÚÝáæðéíóöþúýÀÈÉÌÒÓÙàèéìòóùÅÆÂÉÈÊØÓÒÔåæâéèêøóòôĄĆĘŁŃÓŚŹŻąćęłńóśźżÃÁÀÂÇÉÊÍÕÓÔÚÜãáàâçéêíõóôúüĂÂÎŞȘŢȚăâîşșţțÁÉÍÑÓÚÜáéíñóúüÄÅÉÖäåéöÂÇĞIİÎÖŞÜÛâçğıİîöşüû]+(?: [A-Za-zÁČĎÉĚÍŇÓŘŠŤÚŮÝŽáčďéěíňóřšťúůýžÅÆÉØåæéøÉËÏÓÖÜéëïóöüÄÅÖäåöÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸàâæçéèêëïîôœùûüÿÄÖÜẞäöüßÁÉÍÖÓŐÜÚŰáéíöóőüúűÁÆÐÉÍÓÖÞÚÝáæðéíóöþúýÀÈÉÌÒÓÙàèéìòóùÅÆÂÉÈÊØÓÒÔåæâéèêøóòôĄĆĘŁŃÓŚŹŻąćęłńóśźżÃÁÀÂÇÉÊÍÕÓÔÚÜãáàâçéêíõóôúüĂÂÎŞȘŢȚăâîşșţțÁÉÍÑÓÚÜáéíñóúüÄÅÉÖäåéöÂÇĞIİÎÖŞÜÛâçğıİîöşüû]+)*$/.test(
+        lastName
+      )
+    ) {
+      return true;
+    }
+    alert("Merci de vérifier le format de votre nom");
+    return false;
+  }
+
+  function ValidateAddress(address) {
+    if (/^\d+\s[A-z]+\s[A-z]+/.test(address)) {
+      return true;
+    }
+    alert("Merci de vérifier le format de votre Adresse");
+    return false;
+  }
+
   var valideMail = ValidateEmail(email.value);
+  var validefirstName = ValidateFirstName(firstName.value);
+  var valideLastName = ValidateLastName(lastName.value);
+  var valideAddress = ValidateAddress(address.value);
 
   if (
-    firstName.value === "" ||
-    lastName.value === "" ||
-    address.value === "" ||
+    validefirstName === false ||
+    valideLastName === false ||
+    valideAddress === false ||
     city.value === "" ||
     valideMail === false
   ) {
@@ -282,7 +313,7 @@ function validerlacommande() {
         return data.json();
       })
       .then((data) => {
-        localStorage.setItem("orderId", data.orderId);
+        //localStorage.setItem("orderId", data.orderId);
         alert("Voici votre n° de la commande : " + data.orderId);
         window.location = "confirmation.html?id=" + data.orderId;
       })
